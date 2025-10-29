@@ -1,5 +1,5 @@
 import "./styles.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 // pages
 import HomePage from "../HomePage";
@@ -15,23 +15,31 @@ import TicketsPage from "../TicketsPage";
 import Navbar from "../../components/Navbar";
 
 export default function App() {
+  // نستخدم useLocation لمعرفة الصفحة الحالية
+  const location = useLocation();
+
+  // نحدد الصفحات اللي نبي نميزها بتنسيق معين
+  const routes = ["home", "about", "tickets"];
+  const mainCSS = routes.filter(r => location.pathname.includes(r) ? r : "").join(" ");
+
   return (
     <>
-      
       <Navbar />
 
-     
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/staff" element={<StaffPage />} />
-        <Route path="/technician" element={<TechnicianPage />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/tickets" element={<TicketsPage />} />
-
-      </Routes>
+      <main className={mainCSS}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/staff" element={<StaffPage />} />
+          <Route path="/technician" element={<TechnicianPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/tickets" element={<TicketsPage />} />
+          <Route path="/*" element={<Navigate to="/home" />} />
+        </Routes>
+      </main>
     </>
   );
 }
