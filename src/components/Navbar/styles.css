@@ -1,0 +1,51 @@
+.nav-wrapper {
+  width: 100%;
+  background: radial-gradient(circle at top, #3a1d86 0%, #0b0c2a 70%);
+  border-bottom: 1px solid rgba(230, 223, 223, 0.269);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  }
+
+.nav-inner {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-family: "Poppins", system-ui, sans-serif;
+}
+
+.logo {
+  font-size: 1.7rem;
+  font-weight: 500;
+  background: linear-gradient(90deg, #b095ff 0%, #7d5bff 40%, #50c9ff 100%);
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.05em;
+}
+
+.links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.9rem;
+  font-weight: 400;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: #fff;
+
+}
+
+
+

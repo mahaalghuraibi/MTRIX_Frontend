@@ -1,0 +1,13 @@
+/* background */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: #fff;
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: radial-gradient(circle at top, #3a1d86 0%, #0b0c2a 70%);
+  background-attachment: fixed; 
+}
+

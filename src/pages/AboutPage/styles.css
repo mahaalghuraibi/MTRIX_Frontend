@@ -1,0 +1,40 @@
+/* background*/
+.about-landing {
+  height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle at top, #3a1d86 0%, #0b0c2a 70%);
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  align-items: center;       /* center vertically */
+}
+
+.about-card {
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 25px rgba(123, 91, 255, 0.4);
+  border-radius: 16px;
+
+  max-width: 600px;
+  width: 90%;
+  padding: 2rem 2rem 2.5rem;
+
+  text-align: center;
+}
+
+.about-title {
+  font-size: 2.2rem;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 12px 30px rgba(0,0,0,0.8);
+
+  background: linear-gradient(90deg, #b095ff 0%, #7d5bff 40%, #50c9ff 100%);
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.03em;
+}
+
+.about-text {
+  line-height: 1.6;
+  color: rgba(220,220,255,0.85);
+  margin: 0;
+}
