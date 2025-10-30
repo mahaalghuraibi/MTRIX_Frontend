@@ -1,0 +1,69 @@
+/* form layout */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 0 25px rgba(123, 91, 255, 0.4);
+}
+
+/* form table */
+.form-container table {
+  width: 100%;
+  border-spacing: 0 1.2rem;
+}
+
+.form-container th {
+  text-align: left;
+  font-weight: 500;
+  color: #bcaeff;
+  padding-right: 12px;
+  vertical-align: top;
+}
+
+.form-container td {
+  width: 100%;
+}
+
+/* inputs & textarea */
+.form-container input,
+.form-container textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  color: #fff;
+  font-family: "Poppins", system-ui, sans-serif;
+  box-shadow: 0 0 12px rgba(147, 115, 255, 0.25);
+}
+
+.form-container textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* button */
+.form-container .btn.end {
+  align-self: flex-end;
+  background: linear-gradient(90deg, #b095ff 0%, #7d5bff 40%, #50c9ff 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.6rem;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 0 15px rgba(123, 91, 255, 0.5);
+  transition: transform 0.2s ease;
+}
+
+.form-container .btn.end:hover {
+  transform: scale(1.05);
+}

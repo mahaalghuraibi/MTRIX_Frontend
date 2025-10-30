@@ -1,0 +1,87 @@
+/* Container for the whole detail page */
+.detail-ticket-container {
+  padding: 35px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card section */
+.detail-ticket-container > section {
+  min-width: 45%;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 25px rgba(123, 91, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Image box */
+.detail-ticket-img {
+  min-width: 150px;
+  max-width: 320px;
+  margin-bottom: 1rem;
+}
+
+.detail-ticket-img img {
+  width: 100%;
+  filter: drop-shadow(0 0 20px rgba(147,115,255,0.6));
+}
+
+/* Ticket details */
+.ticket-details {
+  width: 100%;
+  text-align: center;
+}
+
+.ticket-details h1 {
+  font-size: 2rem;
+  margin: 0;
+  background: linear-gradient(90deg, #b095ff 0%, #7d5bff 40%, #50c9ff 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.ticket-details h2 {
+  font-size: 1.4rem;
+  margin: 10px 0;
+  color: rgba(200, 200, 255, 0.9);
+}
+
+.ticket-details p {
+  font-size: 1.1rem;
+  margin: 5px 0;
+}
+
+/* Status label */
+.ticket-status {
+  display: inline-block;
+  padding: 0.4rem 0.7rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(123, 91, 255, 0.5);
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media only screen and (min-width: 768px) {
+  .detail-ticket-container {
+    flex-direction: row;
+  }
+
+  .detail-ticket-img {
+    max-width: 420px;
+    margin-right: 25px;
+  }
+
+  .ticket-details {
+    text-align: left;
+  }
+}

@@ -35,6 +35,11 @@ export default function Navbar() {
           <Link to="/tickets" className="nav-link">
             Tickets
           </Link>
+          
+          <Link to="/tickets/new" className="nav-link">
+            Create New Ticket
+          </Link>
+
         </nav>
       </div>
     </header>

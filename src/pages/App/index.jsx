@@ -10,16 +10,19 @@ import StaffPage from "../StaffPage";
 import TechnicianPage from "../TechnicianPage";
 import AdminPage from "../AdminPage";
 import TicketsPage from "../TicketsPage";
+import TicketDetailPage from "../TicketDetailPage";
+import TicketFormPage from "../TicketFormPage";
 
 // Navbar
 import Navbar from "../../components/Navbar";
 
 export default function App() {
-
   const location = useLocation();
 
   const routes = ["home", "about", "tickets"];
-  const mainCSS = routes.filter(r => location.pathname.includes(r) ? r : "").join(" ");
+  const mainCSS = routes.filter((r) =>
+    location.pathname.includes(r) ? r : ""
+  ).join(" ");
 
   return (
     <>
@@ -36,6 +39,14 @@ export default function App() {
           <Route path="/technician" element={<TechnicianPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/tickets" element={<TicketsPage />} />
+          <Route path="/tickets/:id" element={<TicketDetailPage />} />
+
+          {/* CRUD Forms */}
+          <Route path="/tickets/new" element={<TicketFormPage createTicket={true} />} />
+          <Route path="/tickets/edit/:id" element={<TicketFormPage editTicket={true} />} />
+          <Route path="/tickets/confirm_delete/:id" element={<TicketFormPage deleteTicket={true} />} />
+          
+          {/* wildcard route */}
           <Route path="/*" element={<Navigate to="/home" />} />
         </Routes>
       </main>
