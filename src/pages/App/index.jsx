@@ -15,10 +15,9 @@ import TicketsPage from "../TicketsPage";
 import Navbar from "../../components/Navbar";
 
 export default function App() {
-  // نستخدم useLocation لمعرفة الصفحة الحالية
+
   const location = useLocation();
 
-  // نحدد الصفحات اللي نبي نميزها بتنسيق معين
   const routes = ["home", "about", "tickets"];
   const mainCSS = routes.filter(r => location.pathname.includes(r) ? r : "").join(" ");
 
