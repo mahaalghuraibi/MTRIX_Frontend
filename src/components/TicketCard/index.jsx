@@ -2,6 +2,9 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/setting.svg"; 
 
+
+//-----------------------------------------------------------------------------------------
+// Ticket Card Component 
 export default function TicketCard({ ticket }) {
   return (
     <div className="ticket-card">

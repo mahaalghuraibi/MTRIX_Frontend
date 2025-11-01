@@ -5,9 +5,16 @@ import setting from "../../assets/images/setting.svg";
 import TicketCard from "../../components/TicketCard";
 import * as ticketAPI from "../../utilities/ticket-api";
 
+//-----------------------------------------------------------------------------------------
+// Tickets Page (list all tickets)
 export default function TicketsPage() {
+    //---------------------------------------------------------------------------------------
+  // State
+
   const [allTickets, setAllTickets] = useState([]);
 
+  //---------------------------------------------------------------------------------------
+  // Fetch tickets
   useEffect(() => {
     async function getAllTickets() {
       try {
@@ -21,10 +28,14 @@ export default function TicketsPage() {
     if (allTickets.length === 0) getAllTickets();
   }, []);
 
+   //---------------------------------------------------------------------------------------
+  // Map each ticket
   const displayAllTickets = allTickets.map((t, i) => (
     <TicketCard key={i} ticket={t} />
   ));
 
+  //---------------------------------------------------------------------------------------
+  // UI
   return (
     <>
       <section className="page-header">

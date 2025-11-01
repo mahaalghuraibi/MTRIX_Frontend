@@ -5,13 +5,19 @@ import { useParams, Link } from "react-router-dom";
 import setting from "../../assets/images/setting.svg";
 import * as ticketAPI from "../../utilities/ticket-api";
 
+//-----------------------------------------------------------------------------------------
+// Ticket Form Page (create / edit / delete)
 export default function TicketFormPage({ createTicket, editTicket, deleteTicket }) {
+   //---------------------------------------------------------------------------------------
+  // Local state
   const initialState = { title: "", description: "", status: "", priority: "" };
   const [formData, setFormData] = useState(initialState);
   const [currTicket, setCurrTicket] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
 
+   //---------------------------------------------------------------------------------------
+  // Load ticket for edit/delete
   useEffect(() => {
     async function load() {
       const t = await ticketAPI.show(id);
@@ -21,10 +27,14 @@ export default function TicketFormPage({ createTicket, editTicket, deleteTicket 
     if ((editTicket || deleteTicket) && id) load();
   }, [id, editTicket, deleteTicket]);
 
+  //---------------------------------------------------------------------------------------
+  // Handle inputs
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+   //---------------------------------------------------------------------------------------
+  // Submit create/update
   async function handleSubmit(e) {
     e.preventDefault();
     const saved = editTicket
@@ -34,13 +44,19 @@ export default function TicketFormPage({ createTicket, editTicket, deleteTicket 
     navigate(`/tickets`);
   }
 
+  //---------------------------------------------------------------------------------------
+  // Confirm delete
   async function handleDelete(e) {
     e.preventDefault();
     await ticketAPI.deleteTicket(currTicket.id);
     navigate("/tickets");
   }
 
+   //---------------------------------------------------------------------------------------
+  // Delete mode UI (loading)
   if (deleteTicket && !currTicket) return <h3>Loading...</h3>;
+   //---------------------------------------------------------------------------------------
+  // Delete mode UI (confirm)
   if (deleteTicket && currTicket) {
     return (
       <>
@@ -56,9 +72,13 @@ export default function TicketFormPage({ createTicket, editTicket, deleteTicket 
       </>
     );
   }
+  //---------------------------------------------------------------------------------------
+  // Edit mode UI (loading)
 
   if (editTicket && !currTicket) return <h3>Loading...</h3>;
 
+  //---------------------------------------------------------------------------------------
+  // Create / Edit form
   return (
     <>
       <div className="page-header">

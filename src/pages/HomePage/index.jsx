@@ -3,14 +3,20 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
 
+//-----------------------------------------------------------------------------------------
+// Home Page 
 export default function HomePage() {
+
+   //---------------------------------------------------------------------------------------
+  // Init scroll animation (cy)
   useEffect(() => {
     AOS.init({
       duration: 1000,
       once: true,
     });
   }, []);
-
+ //---------------------------------------------------------------------------------------
+  // UI
   return (
     <main className="home">
       <section className="landing">

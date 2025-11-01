@@ -3,15 +3,22 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
 
+
+
+//-----------------------------------------------------------------------------------------
+// About Page (simple intro for MTRIX)
 export default function AboutPage() {
 
+  //---------------------------------------------------------------------------------------
+  // Init scroll animation (cy)
   useEffect(() => {
     AOS.init({
       duration: 1000,
       once: true,
     });
   }, []);
-
+//---------------------------------------------------------------------------------------
+  // UI
   return (
     <main className="about">
       <section className="about-landing">

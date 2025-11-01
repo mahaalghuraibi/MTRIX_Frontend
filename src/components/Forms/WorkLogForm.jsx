@@ -1,9 +1,13 @@
 import { useState } from "react";
 import * as worklogsAPI from "../../utilities/worklogs-api";
 
+//-----------------------------------------------------------------------------------------
+// WorkLog Form 
 export default function WorkLogForm({ ticketDetail, ticketLogs, setTicketLogs }) {
     const today = new Date().toISOString().slice(0, 10);
 
+//---------------------------------------------------------------------------------------
+// Initial form state
     const initialState = {
         date: today,
         type: "F",
@@ -13,11 +17,15 @@ export default function WorkLogForm({ ticketDetail, ticketLogs, setTicketLogs })
 
     const [formData, setFormData] = useState(initialState);
 
+//---------------------------------------------------------------------------------------
+// Handle inputs
     function handleChange(evt) {
         const updatedData = { ...formData, [evt.target.name]: evt.target.value };
         setFormData(updatedData);
     }
 
+//---------------------------------------------------------------------------------------
+// Submit to API → update list → reset form    
     async function handleSubmit(evt) {
         try {
             evt.preventDefault();
@@ -30,11 +38,14 @@ export default function WorkLogForm({ ticketDetail, ticketLogs, setTicketLogs })
         }
     }
 
-
+//---------------------------------------------------------------------------------------
+// Today logs count 
     const todaysLogs = ticketLogs.filter(
         log => new Date(log.date).toISOString().slice(0, 10) === today
     );
 
+//---------------------------------------------------------------------------------------
+// UI
     return (
         <form className="form-container" onSubmit={handleSubmit}>
 
