@@ -22,6 +22,12 @@ export async function deleteTicket(ticketId) {
   return sendRequest(`${url}${ticketId}/`, "DELETE");
 }
 
+// show
 export async function show(ticketId) {
   return sendRequest(`${url}${ticketId}/`);
+}
+
+// worklog
+export function ticketWorkLogs(ticketId) {
+  return sendRequest(`/tickets/${ticketId}/worklogs/`);
 }
