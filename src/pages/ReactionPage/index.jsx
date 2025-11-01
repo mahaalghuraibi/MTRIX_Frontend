@@ -3,21 +3,27 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import * as reactionsAPI from "../../utilities/reactions-api";
 
+//-----------------------------------------------------------------------------------------
+// Emojis 
 const EMOJI = { 1: "😐", 2: "🙂", 3: "🤩" };
 
+
+//-----------------------------------------------------------------------------------------
+// Reaction Page
 export default function ReactionPage() {
-  // نتوقع فتح الصفحة على مسار مثل: /tickets/:id/reactions
-  const { id } = useParams();           // ticket id
+  const { id } = useParams();           
   const [reactions, setReactions] = useState([]);
   const [formData, setFormData] = useState({ staff_id: "", score: 1 });
   const [loading, setLoading] = useState(true);
 
+
+  //---------------------------------------------------------------------------------------
+  // Load reactions 
   useEffect(() => {
     async function load() {
       try {
         if (!id) return;
         const data = await reactionsAPI.index(id);
-        // ممكن يرجع مصفوفة مباشرة من السيرفر
         setReactions(Array.isArray(data) ? data : (data.items || []));
       } catch (e) {
         setReactions([]);
@@ -28,22 +34,29 @@ export default function ReactionPage() {
     load();
   }, [id]);
 
+
+  //---------------------------------------------------------------------------------------
+  // Pick emoji score
   function pickScore(s) {
     setFormData(prev => ({ ...prev, score: s }));
   }
 
+  //---------------------------------------------------------------------------------------
+  // Handle staff input
   function handleChange(e) {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
+   //---------------------------------------------------------------------------------------
+  // Submit reaction
   async function handleSubmit(e) {
     e.preventDefault();
     if (!id) return;
     try {
-      // { staff_id, score }
+     
       const updated = await reactionsAPI.create(id, formData);
       setReactions(Array.isArray(updated) ? updated : (updated.items || []));
-      // خليه جاهز لإدخال جديد
+    
       setFormData(prev => ({ ...prev, score: 1 }));
     } catch (err) {
       console.log(err);
@@ -52,13 +65,14 @@ export default function ReactionPage() {
 
   if (loading) return <h1>Loading…</h1>;
 
+  //---------------------------------------------------------------------------------------
+  // Page UI
   return (
     <section className="reactions-page" style={{ maxWidth: 720, margin: "0 auto" }}>
       <div className="page-header">
         <h1>Reactions for Ticket #{id}</h1>
       </div>
 
-      {/* فورم الإضافة (إيموجي فقط) */}
       <form className="form-container" onSubmit={handleSubmit}>
         <p>
           <label htmlFor="id_staff">Staff ID:</label>
@@ -106,7 +120,6 @@ export default function ReactionPage() {
         <button type="submit" className="btn submit">Submit</button>
       </form>
 
-      {/* قائمة الرياكشنز الحالية */}
       <div className="subsection-content" style={{ marginTop: 24 }}>
         <h3>Current Reactions</h3>
         {reactions.length > 0 ? (

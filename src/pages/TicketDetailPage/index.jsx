@@ -6,7 +6,10 @@ import logo from "../../assets/images/setting.svg";
 import WorkLogForm from "../../components/Forms/WorkLogForm";
 
 import * as worklogsAPI from "../../utilities/worklogs-api";
-import * as reactionsAPI from "../../utilities/reactions-api"; // ✅ جديد
+import * as reactionsAPI from "../../utilities/reactions-api"; 
+
+//-----------------------------------------------------------------------------------------
+// WorkLog Types
 
 const TYPES = { 
   'F': 'Fix',
@@ -14,16 +17,21 @@ const TYPES = {
   'R': 'Replace'
 }; 
 
+//-----------------------------------------------------------------------------------------
+// Ticket Detail Page
 export default function TicketDetailPage() {
   const [ticketDetail, setTicketDetail] = useState(null);
   const { id } = useParams();
 
   const [ticketLogs, setTicketLogs] = useState([]);
 
-  // ✅ جديد: حالات الرياكشنز
+ //-----------------------------------------------------------------------------------------
+  // Reactions state
   const [reactions, setReactions] = useState([]);
-  const [reactionForm, setReactionForm] = useState({ staff_id: 1, score: 1 }); // افتراضي: موظف 1 وتقييم 😐
+  const [reactionForm, setReactionForm] = useState({ staff_id: 1, score: 1 }); 
 
+   //-----------------------------------------------------------------------------------------
+  // Fetch ticket + worklogs + reactions
   useEffect(() => {
     async function getAndSetDetail() {
       try {
@@ -33,7 +41,6 @@ export default function TicketDetailPage() {
         const logs = await worklogsAPI.ticketLogs(id);
         setTicketLogs(logs);
 
-        // ✅ جديد: جلب رياكشنز التيكِت
         const rx = await reactionsAPI.index(id);
         setReactions(Array.isArray(rx) ? rx : []);
       } catch (err) {
@@ -44,18 +51,18 @@ export default function TicketDetailPage() {
     if (id) getAndSetDetail();
   }, [id]);
 
-  // ✅ جديد: تغيير قيمة الإيموجي المختار
+  //-----------------------------------------------------------------------------------------
+  // Update emoji
   function handleReactionChange(evt) {
     setReactionForm({ ...reactionForm, score: Number(evt.target.value) });
   }
 
-  // ✅ جديد: إرسال الرياكشن
+//-----------------------------------------------------------------------------------------
+  // Submit reaction
   async function handleReactionSubmit(evt) {
     evt.preventDefault();
     try {
-      // formData المتوقع: { staff_id: number, score: 1|2|3 }
       const updated = await reactionsAPI.create(id, reactionForm);
-      // الـ API يرجّع قائمة محدّثة – نحافظ على السلوك نفسه
       setReactions(Array.isArray(updated) ? updated : reactions);
     } catch (err) {
       console.log(err);
@@ -64,12 +71,15 @@ export default function TicketDetailPage() {
 
   if (!ticketDetail) return <h3>Your ticket details will display soon...</h3>;
 
-  // ✅ جديد: حساب عدّادات سريعة للواجهة
+//-----------------------------------------------------------------------------------------
+  // Count reactions for UI
   const counts = reactions.reduce((acc, r) => {
     acc[r.score] = (acc[r.score] || 0) + 1;
     return acc;
   }, { 1: 0, 2: 0, 3: 0 });
 
+//-----------------------------------------------------------------------------------------
+  // Page UI
   return (
     <section className="detail-ticket-container">
       <div className="detail-ticket-img">
@@ -89,7 +99,8 @@ export default function TicketDetailPage() {
           Delete
         </Link>
       </div>
-
+ {/*-------------------------------------------------------------------------------------*/}
+      {/* WorkLogs Section */}
       <div className="worklogs-container">
         <section className="worklogs">
           <div className="subsection-title">
@@ -130,7 +141,8 @@ export default function TicketDetailPage() {
         </section>
       </div>
 
-      {/* ✅ جديد: قسم الرياكشنز — بسيط وخفيف، أسفل Work Logs */}
+      {/*-------------------------------------------------------------------------------------*/}
+      {/* Reactions Section */}
       <div className="worklogs-container">
         <section className="worklogs">
           <div className="subsection-title">
@@ -177,7 +189,8 @@ export default function TicketDetailPage() {
             <button type="submit" className="btn submit">Add Reaction</button>
           </form>
 
-          {/* ملخص صغير للرياكشنز الحالية */}
+          {/*---------------------------------------------------------------------------------*/}
+          {/* Reactions summary */}
           <div className="subsection-content" style={{ marginTop: "12px" }}>
             <p>
               Current reactions: &nbsp;
@@ -188,7 +201,7 @@ export default function TicketDetailPage() {
           </div>
         </section>
       </div>
-      {/* نهاية قسم الرياكشنز */}
+      {/*-------------------------------------------------------------------------------------*/}
     </section>
   );
 }
