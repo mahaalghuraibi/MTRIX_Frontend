@@ -1,8 +1,7 @@
 import "./styles.css";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
-
-
+//-----------------------------------------------------------------------------------------
 // pages
 import HomePage from "../HomePage";
 import AboutPage from "../AboutPage";
@@ -16,9 +15,14 @@ import TicketDetailPage from "../TicketDetailPage";
 import TicketFormPage from "../TicketFormPage";
 import ReactionPage from "../ReactionPage";
 
+//-----------------------------------------------------------------------------------------
 // Navbar
 import Navbar from "../../components/Navbar";
 
+
+
+//-----------------------------------------------------------------------------------------
+// Main App
 export default function App() {
   const location = useLocation();
 
@@ -38,19 +42,23 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+
+
           <Route path="/staff" element={<StaffPage />} />
           <Route path="/technician" element={<TechnicianPage />} />
           <Route path="/admin" element={<AdminPage />} />
+
+
           <Route path="/tickets" element={<TicketsPage />} />
           <Route path="/tickets/:id" element={<TicketDetailPage />} />
 
-          {/* CRUD Forms */}
           <Route path="/tickets/new" element={<TicketFormPage createTicket={true} />} />
           <Route path="/tickets/edit/:id" element={<TicketFormPage editTicket={true} />} />
           <Route path="/tickets/confirm_delete/:id" element={<TicketFormPage deleteTicket={true} />} />
+
+
           <Route path="/tickets/:id/reactions" element={<ReactionPage />} />
 
-          {/* wildcard route */}
           <Route path="/*" element={<Navigate to="/home" />} />
         </Routes>
       </main>
