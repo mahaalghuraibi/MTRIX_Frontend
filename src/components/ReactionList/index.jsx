@@ -1,3 +1,5 @@
+//-----------------------------------------------------------------------------------------
+//Display Reactions Component
 export default function DisplayReactions({ reaction, submitFunction, formAction }) {
   return (
     <div className="reaction-container">
