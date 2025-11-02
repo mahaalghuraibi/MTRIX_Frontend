@@ -1,6 +1,6 @@
 import "./styles.css";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react"; // ✅ أضفنا useEffect هنا
+import { useState, useEffect } from "react"; 
 import { getUser } from "../../utilities/users-api";
 
 //-----------------------------------------------------------------------------------------
@@ -16,6 +16,7 @@ import TicketsPage from "../TicketsPage";
 import TicketDetailPage from "../TicketDetailPage";
 import TicketFormPage from "../TicketFormPage";
 import ReactionPage from "../ReactionPage";
+import ProfilePage from "../ProfilePage";
 
 //-----------------------------------------------------------------------------------------
 // Navbar
@@ -43,57 +44,39 @@ export default function App() {
     .filter((r) => (location.pathname.includes(r) ? r : ""))
     .join(" ");
 
+
+  console.log(user, "app jsx user")
+
   return (
     <>
       <Navbar user={user} setUser={setUser} />
 
       <main className={mainCSS}>
         <Routes>
+          
           {user ? (
             <>
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-
-              <Route path="/staff" element={<StaffPage />} />
-              <Route path="/technician" element={<TechnicianPage />} />
-              <Route path="/admin" element={<AdminPage />} />
-
-              <Route path="/tickets" element={<TicketsPage />} />
-              <Route
-                path="/tickets/new"
-                element={<TicketFormPage createTicket={true} />}
-              />
-              <Route
-                path="/tickets/edit/:id"
-                element={<TicketFormPage editTicket={true} />}
-              />
-              <Route
-                path="/tickets/confirm_delete/:id"
-                element={<TicketFormPage deleteTicket={true} />}
-              />
-              <Route path="/tickets/:id" element={<TicketDetailPage />} />
-              <Route
-                path="/tickets/:id/reactions"
-                element={<ReactionPage />}
-              />
-
-              <Route path="/" element={<HomePage />} />
-              <Route path="/*" element={<Navigate to="/home" />} />
+              <Route path="/home"                         element={<HomePage />} />
+              <Route path="/about"                        element={<AboutPage />} />
+              <Route path="/profile"                      element={<ProfilePage user={user} setUser={setUser} />} />
+              <Route path="/staff"                        element={<StaffPage />} />
+              <Route path="/technician"                   element={<TechnicianPage />} />
+              <Route path="/admin"                        element={<AdminPage />} />
+              <Route path="/tickets"                      element={<TicketsPage />} />
+              <Route path="/tickets/new"                  element={<TicketFormPage createTicket={true} />} />
+              <Route path="/tickets/edit/:id"             element={<TicketFormPage editTicket={true} />}   />
+              <Route path="/tickets/confirm_delete/:id"   element={<TicketFormPage deleteTicket={true} />} />
+              <Route path="/tickets/:id"                  element={<TicketDetailPage />} />
+              <Route path="/tickets/:id/reactions"        element={<ReactionPage />}     />
+              <Route path="/*"                            element={<Navigate to="/home" />} />
             </>
           ) : (
             <>
               {/* Public routes */}
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route
-                path="/signup"
-                element={<SignupPage setUser={setUser} />}
-              />
-              <Route path="/login" element={<LoginPage setUser={setUser} />} />
-
-
-              <Route path="/" element={<HomePage />} />
-              <Route path="/*" element={<Navigate to="/home" />} />
+              <Route path="/home"   element={<HomePage />} />
+              <Route path="/about"  element={<AboutPage />} />
+              <Route path="/signup" element={<SignupPage setUser={setUser} />}/>
+              <Route path="/login"  element={<LoginPage setUser={setUser}   />}/>
             </>
           )}
         </Routes>

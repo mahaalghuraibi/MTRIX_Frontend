@@ -1,17 +1,17 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router";
 import "./styles.css";
 import * as usersAPI from "../../utilities/users-api";
 
 //--------------------------------------------------------
 export default function Navbar({ user, setUser }) {
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
 
   function handleLogout(e) {
     e.preventDefault();
     usersAPI.logout();
     setUser(null);
-    navigate("/");
+    navigate("/home");
   }
 
   return (
@@ -22,11 +22,12 @@ export default function Navbar({ user, setUser }) {
 
         {/* right -- links */}
         <nav className="links">
-          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/home" className="nav-link">Home</Link>
           <Link to="/about" className="nav-link">About</Link>
 
           {user ? (
             <>
+              <Link to="/profile" className="nav-link">Profile</Link>
               <Link to="/staff" className="nav-link">Staff</Link>
               <Link to="/technician" className="nav-link">Technician</Link>
               <Link to="/admin" className="nav-link">Admin</Link>

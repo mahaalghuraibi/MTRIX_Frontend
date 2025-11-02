@@ -1,0 +1,42 @@
+.profile-page {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.profile-card {
+  width: min(500px, 90vw);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.profile-card h1 {
+  margin: 0 0 8px;
+}
+
+.profile-card .hint {
+  opacity: 0.8;
+  margin-bottom: 16px;
+}
+
+.profile-form {
+  display: grid;
+  gap: 12px;
+}
+
+.profile-form select {
+  background: #0f1324;
+  color: #e9ecff;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.btn.submit {
+  margin-top: 8px;
+}

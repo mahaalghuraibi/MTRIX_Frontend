@@ -75,39 +75,6 @@ export default function HomePage({ user, setUser }) {
         </div>
       </section>
 
-      {!user && (
-        <section className="login-section" data-aos="fade-up">
-          <form onSubmit={handleLogin} className="form-container login">
-            <h1>Login</h1>
-            <p>
-              <label htmlFor="id_username">Username:</label>
-              <input
-                id="id_username"
-                name="username"
-                type="text"
-                maxLength="150"
-                required
-                value={formData.username}
-                onChange={handleChange}
-              />
-            </p>
-            <p>
-              <label htmlFor="id_password">Password:</label>
-              <input
-                id="id_password"
-                name="password"
-                type="password"
-                required
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </p>
-            <button type="submit" className="btn submit">
-              Login
-            </button>
-          </form>
-        </section>
-      )}
     </main>
   );
 }

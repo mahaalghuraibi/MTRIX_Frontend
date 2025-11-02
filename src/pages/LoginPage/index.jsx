@@ -25,9 +25,10 @@ export default function LoginPage({ setUser }) {
     evt.preventDefault();
     try {
       const user = await usersAPI.login(formData);
+      console.log({user})
       if (user) {
         setUser(user);
-        navigate("/home"); 
+        navigate("/profile"); 
       } else {
         setError("Invalid username or password");
       }
