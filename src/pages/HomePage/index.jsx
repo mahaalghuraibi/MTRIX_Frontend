@@ -1,13 +1,19 @@
+// IMPORTS
 import "./styles.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; 
+
+// APIs
+import * as usersAPI from "../../utilities/users-api";
 
 //-----------------------------------------------------------------------------------------
 // Home Page 
-export default function HomePage() {
+export default function HomePage({ user, setUser }) {
+  const navigate = useNavigate(); 
 
-   //---------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------
   // Init scroll animation (cy)
   useEffect(() => {
     AOS.init({
@@ -15,7 +21,31 @@ export default function HomePage() {
       once: true,
     });
   }, []);
- //---------------------------------------------------------------------------------------
+
+  //---------------------------------------------------------------------------------------
+  // Login 
+  const initialState = { username: "", password: "" };
+  const [formData, setFormData] = useState(initialState);
+
+  function handleChange(evt) {
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  }
+  
+//---------------------------------------------------------------------------------------
+
+ async function handleLogin(evt) {
+    try {
+      evt.preventDefault();
+      const loggedInUser = await usersAPI.login(formData); 
+      setUser(loggedInUser); 
+      navigate("/home"); 
+    } catch (err) {
+      console.log(err);
+      setUser(null);
+    }
+  }
+
+  //---------------------------------------------------------------------------------------
   // UI
   return (
     <main className="home">
@@ -44,7 +74,40 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      {!user && (
+        <section className="login-section" data-aos="fade-up">
+          <form onSubmit={handleLogin} className="form-container login">
+            <h1>Login</h1>
+            <p>
+              <label htmlFor="id_username">Username:</label>
+              <input
+                id="id_username"
+                name="username"
+                type="text"
+                maxLength="150"
+                required
+                value={formData.username}
+                onChange={handleChange}
+              />
+            </p>
+            <p>
+              <label htmlFor="id_password">Password:</label>
+              <input
+                id="id_password"
+                name="password"
+                type="password"
+                required
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </p>
+            <button type="submit" className="btn submit">
+              Login
+            </button>
+          </form>
+        </section>
+      )}
     </main>
   );
 }
-

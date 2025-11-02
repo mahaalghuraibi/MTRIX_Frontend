@@ -3,7 +3,7 @@ const baseURL = "/users/";
 
 //-----------------------------------------------------------------------------------------
 // Signup
-//-----------------------------------------------------------------------------------------
+
 export async function signup(formData) {
     try {
         const newUserData = await sendRequest(`${baseURL}signup/`, "POST", formData);
@@ -19,12 +19,13 @@ export async function signup(formData) {
 
 //-----------------------------------------------------------------------------------------
 // Login
-//-----------------------------------------------------------------------------------------
+
 export async function login(formData) {
     try {
         const loggedInUser = await sendRequest(`${baseURL}login/`, "POST", formData);
         localStorage.setItem("accessToken", loggedInUser.access);
         localStorage.setItem("refreshToken", loggedInUser.refresh);
+        console.log(loggedInUser.user)
         return loggedInUser.user;
     } catch (err) {
         localStorage.removeItem("accessToken");
@@ -32,28 +33,30 @@ export async function login(formData) {
         return null;
     }
 }
+//-----------------------------------------------------------------------------------------
+// Get User (auto-login / token refresh)
 
-//-----------------------------------------------------------------------------------------
-// Get User
-//-----------------------------------------------------------------------------------------
 export async function getUser() {
-    try {
-        const token = localStorage.getItem("accessToken");
-        if (token) {
-            const response = await sendRequest(`${baseURL}token/refresh/`);
-            localStorage.setItem("accessToken", response.access);
-            return response.user;
-        }
-        return null;
-    } catch (err) {
-        console.log(err);
-        return null;
-    }
+  try {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return null;
+
+    const response = await sendRequest(`${baseURL}token/refresh/`); // GET
+    // خزّني التوكنات المحدثة
+    if (response?.access) localStorage.setItem("accessToken", response.access);
+    if (response?.refresh) localStorage.setItem("refreshToken", response.refresh);
+
+    return response?.user || null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 }
+
 
 //-----------------------------------------------------------------------------------------
 // Logout
-//-----------------------------------------------------------------------------------------
+
 export function logout() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
