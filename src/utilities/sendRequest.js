@@ -1,8 +1,8 @@
 //-----------------------------------------------------------------------------------------
 // sendRequest helper 
 export default async function sendRequest(url, method = "GET", payload) {
-  //---------------------------------------------------------------------------------------
-  // Setup options
+//---------------------------------------------------------------------------------------
+// Setup options
   const options = { method };
 
   if (payload) {
@@ -10,7 +10,7 @@ export default async function sendRequest(url, method = "GET", payload) {
     options.body = JSON.stringify(payload);
   }
 //---------------------------------------------------------------------------------------
-  // Send request
+// Send request
   try {
     const res = await fetch(`http://localhost:8000${url}`, options);
     if (res.ok) return res.json();

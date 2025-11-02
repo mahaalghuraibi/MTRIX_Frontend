@@ -31,3 +31,10 @@ export async function show(ticketId) {
 export function ticketWorkLogs(ticketId) {
   return sendRequest(`/tickets/${ticketId}/worklogs/`);
 }
+
+
+// Profile
+
+export function updateProfile(userId, formData) {
+  return sendRequest(`/users/${userId}/profile/`, "POST", formData);
+}
