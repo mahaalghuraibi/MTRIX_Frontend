@@ -1,13 +1,14 @@
 // src/utilities/profile-api.js
-import sendRequest from "./sendRequest";
+import sendRequest from "../utilities/sendRequest";
 
-// GET /api/profile/me/
-export function getMyProfile() {
-  return sendRequest("/api/profile/me/");
+// 🟦 تحديث نوع البروفايل (Staff / Technician / Admin)
+export async function saveProfile(type) {
+  // نرسل القيمة للـ backend كـ { type: "staff" } أو { type: "tech" } أو { type: "admin" }
+  return sendRequest("/profile/update/", "PUT", { type });
 }
 
-// PUT /api/profile/me/
-export function updateProfile(data) {
-  // data شكلها: { role: "Staff" | "Technician" | "Admin" }
-  return sendRequest("/api/profile/me/", "PUT", data);
+// 🟦 (اختياري) دالة لقراءة البروفايل الحالي لاحقًا إذا احتجتيها
+export async function getProfile() {
+  return sendRequest("/profile/", "GET");
 }
+

@@ -2,6 +2,7 @@ import "./styles.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import * as usersAPI from "../../utilities/users-api";
+import * as profileAPI from "../../utilities/profile-api";
 
 export default function ProfilePage({ user, setUser }) {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function ProfilePage({ user, setUser }) {
         e.preventDefault();
         try {
             // // احفظ الدور في الباك-إند
-            const updatedUser = await usersAPI.saveProfile(user.id, role);
+            const updatedUser = await profileAPI.saveProfile(role);
 
             // حدّث حالة المستخدم
             setUser(updatedUser);

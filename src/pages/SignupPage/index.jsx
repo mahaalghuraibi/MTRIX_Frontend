@@ -62,9 +62,13 @@ export default function SignupPage({ setUser }) {
     try {
       evt.preventDefault();
       const newUser = await usersAPI.signup(formData);
-      setUser(newUser);
-      setFormData(initialState);
-      navigate(`/profile`);
+      if (newUser) {
+        setUser(newUser);
+        setFormData(initialState);
+        setTimeout(() => {
+          navigate(`/profile`);
+        }, 10);
+      }
     } catch (err) {
       console.log(err);
       setUser(null);
