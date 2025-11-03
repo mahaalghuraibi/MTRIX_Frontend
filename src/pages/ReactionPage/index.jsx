@@ -1,4 +1,3 @@
-import "./styles.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import * as reactionsAPI from "../../utilities/reactions-api";

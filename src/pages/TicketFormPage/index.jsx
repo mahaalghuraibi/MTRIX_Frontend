@@ -8,7 +8,6 @@ import setting from "../../assets/images/setting.svg";
 import * as ticketAPI from "../../utilities/ticket-api";
 
 //-----------------------------------------------------------------------------------------
-// Ticket Form Page (create / edit / delete)
 export default function TicketFormPage({ createTicket, editTicket, deleteTicket, user }) { 
    //---------------------------------------------------------------------------------------
   // Local state

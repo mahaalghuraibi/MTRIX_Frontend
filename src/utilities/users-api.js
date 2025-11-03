@@ -34,7 +34,7 @@ export async function login(formData) {
     }
 }
 //-----------------------------------------------------------------------------------------
-// Get User (auto-login / token refresh)
+// Get User 
 
 export async function getUser() {
   try {

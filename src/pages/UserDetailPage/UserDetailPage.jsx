@@ -7,17 +7,14 @@ import AddProfileForm from "../../components/Forms/AddProfileForm";
 
 
 //-----------------------------------------------------------------------------------------
-// User Detail Page
 export default function UserDetailPage({ initialUser = null }) {
   const [userDetail, setUserDetail] = useState(initialUser);
   const { id } = useParams();
 
   //---------------------------------------------------------------------------------------
-  // Role state (Admin / Staff / Technician)
   const [roleForm, setRoleForm] = useState({ role: "Staff" });
 
   //---------------------------------------------------------------------------------------
-  // On mount: hydrate from initialUser 
   useEffect(() => {
     if (initialUser) {
       setUserDetail(initialUser);
@@ -26,13 +23,11 @@ export default function UserDetailPage({ initialUser = null }) {
   }, [initialUser]);
 
   //---------------------------------------------------------------------------------------
-  // Handle role change
   function handleRoleChange(evt) {
     setRoleForm({ role: evt.target.value });
   }
 
   //---------------------------------------------------------------------------------------
-  // Submit role (creates/updates One-to-One Profile)
   async function handleRoleSubmit(evt) {
     evt.preventDefault();
     try {
@@ -46,7 +41,6 @@ export default function UserDetailPage({ initialUser = null }) {
   }
 
   //---------------------------------------------------------------------------------------
-  // Function to pass to AddProfileForm (same idea as addPhoto in lesson)
   async function updateProfile(userId, formData) {
     try {
       const updatedUser = await ticketAPI.updateProfile(userId, formData);
@@ -86,7 +80,6 @@ export default function UserDetailPage({ initialUser = null }) {
       </div>
 
       {/*-----------------------------------------------------------------------------------*/}
-      {/* Update Role Section  */}
       <div className="worklogs-container">
         <section className="worklogs">
           <div className="subsection-title">
@@ -94,12 +87,9 @@ export default function UserDetailPage({ initialUser = null }) {
           </div>
 
           {/*---------------------------------------------------------------------------------*/}
-          {/* AddProfileForm Component  */}
           <AddProfileForm user={userDetail} updateProfile={updateProfile} />
-          {/*---------------------------------------------------------------------------------*/}
 
           {/*---------------------------------------------------------------------------------*/}
-          {/* Old form can be kept for reference or removed */}
           <form className="form-container" onSubmit={handleRoleSubmit}>
             <p>
               <label htmlFor="role_select">Choose role:</label>
@@ -149,7 +139,6 @@ export default function UserDetailPage({ initialUser = null }) {
           </form>
 
           {/*---------------------------------------------------------------------------------*/}
-          {/* Summary */}
           <div className="subsection-content" style={{ marginTop: "12px" }}>
             <p>
               Current role:&nbsp;

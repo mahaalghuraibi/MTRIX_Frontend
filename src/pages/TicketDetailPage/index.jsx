@@ -181,7 +181,6 @@ export default function TicketDetailPage({ user }) {
         )}
       </div>
       {/*-------------------------------------------------------------------------------------*/}
-      {/* WorkLogs Section - للـ Technician و Admin */}
       {(user?.profile?.role === "Technician" || user?.profile?.role === "Admin") && (
         <div className="worklogs-container">
           <section className="worklogs">

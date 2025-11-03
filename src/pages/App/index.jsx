@@ -1,4 +1,3 @@
-import "./styles.css";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react"; 
 import { getUser } from "../../utilities/users-api";
