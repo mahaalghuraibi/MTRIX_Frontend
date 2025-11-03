@@ -5,7 +5,7 @@ export default function DisplayReactions({ reaction, submitFunction, formAction 
     <div className="reaction-container">
       <div className="reaction-info">
         <p>Staff #{reaction.staff_id}</p>
-        <p style={{ fontSize: "1.4rem" }}>
+        <p id="reaction_holder">
           {reaction.score === 1 ? "😐" : reaction.score === 2 ? "🙂" : "🤩"}
         </p>
       </div>

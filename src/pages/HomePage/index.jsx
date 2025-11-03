@@ -14,7 +14,7 @@ export default function HomePage({ user, setUser }) {
   const navigate = useNavigate(); 
 
   //---------------------------------------------------------------------------------------
-  // Init scroll animation (cy)
+  // Init scroll animation 
   useEffect(() => {
     AOS.init({
       duration: 1000,

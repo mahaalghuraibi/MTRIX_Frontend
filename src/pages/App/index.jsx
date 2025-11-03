@@ -47,9 +47,11 @@ export default function App() {
 
   console.log(user, "app jsx user")
 
+  const hideNavbar = location.pathname === "/profile" && !user?.profile?.role;
+
   return (
     <>
-      <Navbar user={user} setUser={setUser} />
+      {!hideNavbar && <Navbar user={user} setUser={setUser} />}
 
       <main className={mainCSS}>
         <Routes>
@@ -59,16 +61,31 @@ export default function App() {
               <Route path="/home"                         element={<HomePage />} />
               <Route path="/about"                        element={<AboutPage />} />
               <Route path="/profile"                      element={<ProfilePage user={user} setUser={setUser} />} />
-              <Route path="/staff"                        element={<StaffPage />} />
-              <Route path="/technician"                   element={<TechnicianPage />} />
-              <Route path="/admin"                        element={<AdminPage />} />
-              <Route path="/tickets"                      element={<TicketsPage />} />
-              <Route path="/tickets/new"                  element={<TicketFormPage createTicket={true} />} />
-              <Route path="/tickets/edit/:id"             element={<TicketFormPage editTicket={true} />}   />
-              <Route path="/tickets/confirm_delete/:id"   element={<TicketFormPage deleteTicket={true} />} />
-              <Route path="/tickets/:id"                  element={<TicketDetailPage />} />
-              <Route path="/tickets/:id/reactions"        element={<ReactionPage />}     />
-              <Route path="/*"                            element={<Navigate to="/home" />} />
+              
+              {user?.profile?.role === "Staff" ? (
+                <>
+                  <Route path="/staff"                        element={<StaffPage />} />
+                  <Route path="/tickets"                      element={<TicketsPage />} />
+                  <Route path="/tickets/new"                  element={<TicketFormPage createTicket={true} user={user} />} />
+                  <Route path="/tickets/edit/:id"             element={<TicketFormPage editTicket={true} user={user} />} />
+                  <Route path="/tickets/confirm_delete/:id"   element={<TicketFormPage deleteTicket={true} />} />
+                  <Route path="/tickets/:id"                  element={<TicketDetailPage user={user} />} />
+                  <Route path="/*"                            element={<Navigate to="/home" />} />
+                </>
+              ) : (
+                <>
+                  <Route path="/staff"                        element={<StaffPage />} />
+                  <Route path="/technician"                   element={<TechnicianPage />} />
+                  <Route path="/admin"                        element={<AdminPage />} />
+                  <Route path="/tickets"                      element={<TicketsPage />} />
+                  <Route path="/tickets/new"                  element={<TicketFormPage createTicket={true} user={user} />} />
+                  <Route path="/tickets/edit/:id"             element={<TicketFormPage editTicket={true} user={user} />} />
+                  <Route path="/tickets/confirm_delete/:id"   element={<TicketFormPage deleteTicket={true} />} />
+                  <Route path="/tickets/:id"                  element={<TicketDetailPage user={user} />} />
+                  <Route path="/tickets/:id/reactions"        element={<ReactionPage />} />
+                  <Route path="/*"                            element={<Navigate to="/home" />} />
+                </>
+              )}
             </>
           ) : (
             <>

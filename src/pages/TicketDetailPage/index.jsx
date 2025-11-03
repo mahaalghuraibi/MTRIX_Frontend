@@ -14,12 +14,15 @@ import * as reactionsAPI from "../../utilities/reactions-api";
 const TYPES = { 
   'F': 'Fix',
   'C': 'Check',
-  'R': 'Replace'
+  'R': 'Fixed'
 }; 
 
 //-----------------------------------------------------------------------------------------
+const EMOJI = { 1: "😐", 2: "🙂", 3: "🤩" };
+
+//-----------------------------------------------------------------------------------------
 // Ticket Detail Page
-export default function TicketDetailPage() {
+export default function TicketDetailPage({ user }) {
   const [ticketDetail, setTicketDetail] = useState(null);
   const { id } = useParams();
 
@@ -29,6 +32,7 @@ export default function TicketDetailPage() {
   // Reactions state
   const [reactions, setReactions] = useState([]);
   const [reactionForm, setReactionForm] = useState({ staff_id: 1, score: 1 }); 
+  const [editingReaction, setEditingReaction] = useState(null);
 
    //-----------------------------------------------------------------------------------------
   // Fetch ticket + worklogs + reactions
@@ -41,8 +45,8 @@ export default function TicketDetailPage() {
         const logs = await worklogsAPI.ticketLogs(id);
         setTicketLogs(logs);
 
-        const rx = await reactionsAPI.index(id);
-        setReactions(Array.isArray(rx) ? rx : []);
+        const reactions = await reactionsAPI.indexByTicket(id);
+        setReactions(Array.isArray(reactions) ? reactions : []);
       } catch (err) {
         console.log(err);
         setTicketDetail(null);
@@ -62,10 +66,66 @@ export default function TicketDetailPage() {
   async function handleReactionSubmit(evt) {
     evt.preventDefault();
     try {
-      const updated = await reactionsAPI.create(id, reactionForm);
+      const updated = await reactionsAPI.createByTicket(id, reactionForm);
       setReactions(Array.isArray(updated) ? updated : reactions);
+      setReactionForm({ staff_id: 1, score: 1 });
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  async function handleDeleteReaction(reactionId) {
+    if (!window.confirm("Are you sure you want to delete this reaction?")) {
+      return;
+    }
+    try {
+      await reactionsAPI.deleteReaction(reactionId);
+      setReactions(reactions.filter(r => r.id !== reactionId));
+    } catch (err) {
+      console.log(err);
+      alert("Failed to delete reaction");
+    }
+  }
+
+  function handleStartEdit(reaction) {
+    setEditingReaction({ ...reaction });
+  }
+
+  function handleCancelEdit() {
+    setEditingReaction(null);
+  }
+
+  async function handleSaveEdit(evt) {
+    evt.preventDefault();
+    try {
+      const dataToSend = {
+        ticket: Number(editingReaction.ticket),
+        staff_id: Number(editingReaction.staff_id),
+        score: Number(editingReaction.score)
+      };
+      const updated = await reactionsAPI.update(dataToSend, editingReaction.id);
+      setReactions(reactions.map(r => r.id === editingReaction.id ? updated : r));
+      setEditingReaction(null);
+    } catch (err) {
+      console.log(err);
+      alert("Failed to update reaction");
+    }
+  }
+
+  //---------------------------------------------------------------------------------------
+  // Update ticket status (for Technician)
+  async function handleStatusChange(newStatus) {
+    try {
+      const dataToSend = {
+        title: ticketDetail.title,
+        description: ticketDetail.description,
+        status: newStatus
+      };
+      const updated = await ticketAPI.update(dataToSend, ticketDetail.id);
+      setTicketDetail(updated);
+    } catch (err) {
+      console.log(err);
+      alert("Failed to update ticket status");
     }
   }
 
@@ -92,54 +152,113 @@ export default function TicketDetailPage() {
         <p><small>Created by: {ticketDetail.created_by}</small></p>
       </div>
       <div className="ticket-actions">
-        <Link to={`/tickets/edit/${ticketDetail.id}`} className="btn warn">
-          Edit
-        </Link>
-        <Link to={`/tickets/confirm_delete/${ticketDetail.id}`} className="btn danger">
-          Delete
-        </Link>
+        {user?.profile?.role === "Technician" ? (
+          <>
+            <button 
+              onClick={() => handleStatusChange("open")} 
+              className={`btn ${ticketDetail.status === "open" ? "warn" : "secondary"}`}
+              disabled={ticketDetail.status === "open"}
+            >
+              Open
+            </button>
+            <button 
+              onClick={() => handleStatusChange("close")} 
+              className={`btn ${ticketDetail.status === "close" ? "danger" : "secondary"}`}
+              disabled={ticketDetail.status === "close"}
+            >
+              Close
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to={`/tickets/edit/${ticketDetail.id}`} className="btn warn">
+              Edit
+            </Link>
+            <Link to={`/tickets/confirm_delete/${ticketDetail.id}`} className="btn danger">
+              Delete
+            </Link>
+          </>
+        )}
       </div>
- {/*-------------------------------------------------------------------------------------*/}
-      {/* WorkLogs Section */}
-      <div className="worklogs-container">
-        <section className="worklogs">
-          <div className="subsection-title">
-            <h2>Work Logs</h2> 
-          </div>
-
-          <h3>Add a Work Log</h3>
-          <WorkLogForm 
-            ticketDetail={ticketDetail} 
-            ticketLogs={ticketLogs} 
-            setTicketLogs={setTicketLogs} 
-          />
-
-          {ticketLogs.length > 0 ? (
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Type</th>
-                  <th>Note</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ticketLogs.map((log, ind) => (  
-                  <tr key={ind}>
-                    <td>{log.date}</td>
-                    <td>{TYPES[log.type]}</td> 
-                    <td>{log.note}</td> 
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="subsection-content">
-              <p>⚠️ This ticket has no work logs yet!</p>
+      {/*-------------------------------------------------------------------------------------*/}
+      {/* WorkLogs Section - للـ Technician و Admin */}
+      {(user?.profile?.role === "Technician" || user?.profile?.role === "Admin") && (
+        <div className="worklogs-container">
+          <section className="worklogs">
+            <div className="subsection-title">
+              <h2>Work Logs</h2> 
             </div>
-          )}
-        </section>
-      </div>
+
+            <h3>Add a Work Log</h3>
+            <WorkLogForm 
+              ticketDetail={ticketDetail} 
+              ticketLogs={ticketLogs} 
+              setTicketLogs={setTicketLogs} 
+            />
+
+            {ticketLogs.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ticketLogs.map((log, ind) => (  
+                    <tr key={ind}>
+                      <td>{log.date}</td>
+                      <td>{TYPES[log.type]}</td> 
+                      <td>{log.note}</td> 
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="subsection-content">
+                <p>⚠️ This ticket has no work logs yet!</p>
+              </div>
+            )}
+          </section>
+        </div>
+      )}
+
+      {/*-------------------------------------------------------------------------------------*/}
+      {user?.profile?.role === "Staff" && (
+        <div className="worklogs-container">
+          <section className="worklogs">
+            <div className="subsection-title">
+              <h2>Work Logs</h2> 
+            </div>
+
+            {ticketLogs.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ticketLogs.map((log, ind) => (  
+                    <tr key={ind}>
+                      <td>{log.date}</td>
+                      <td>{TYPES[log.type]}</td> 
+                      <td>{log.note}</td> 
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="subsection-content">
+                <p>⚠️ This ticket has no work logs yet!</p>
+              </div>
+            )}
+          </section>
+        </div>
+      )}
 
       {/*-------------------------------------------------------------------------------------*/}
       {/* Reactions Section */}
@@ -149,8 +268,10 @@ export default function TicketDetailPage() {
             <h2>Reactions</h2>
           </div>
 
-          <h3>Add a Reaction</h3>
-          <form className="form-container" onSubmit={handleReactionSubmit}>
+          {user?.profile?.role !== "Technician" && (
+            <>
+              <h3>Add a Reaction</h3>
+              <form className="form-container" onSubmit={handleReactionSubmit}>
             <p>
               <label htmlFor="rx_score">Choose:</label>
               <div id="rx_score" style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
@@ -188,6 +309,93 @@ export default function TicketDetailPage() {
             </p>
             <button type="submit" className="btn submit">Add Reaction</button>
           </form>
+            </>
+          )}
+
+          {/*---------------------------------------------------------------------------------*/}
+          {reactions.length > 0 && (
+            <div className="subsection-content" style={{ marginTop: "12px" }}>
+              <h3>All Reactions</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Staff ID</th>
+                    <th>Reaction</th>
+                    {user?.profile?.role !== "Technician" && <th>Actions</th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {reactions.map((r) => (
+                    user?.profile?.role !== "Technician" && editingReaction && editingReaction.id === r.id ? (
+                      <tr key={r.id}>
+                        <td>
+                          <input
+                            type="number"
+                            value={editingReaction.staff_id}
+                            onChange={(e) => setEditingReaction({ ...editingReaction, staff_id: Number(e.target.value) })}
+                            style={{ width: "80px" }}
+                          />
+                        </td>
+                        <td>
+                          <div style={{ display: "flex", gap: "8px" }}>
+                            {[1, 2, 3].map(s => (
+                              <label key={s} style={{ cursor: "pointer" }}>
+                                <input
+                                  type="radio"
+                                  name={`edit_score_${r.id}`}
+                                  value={s}
+                                  checked={editingReaction.score === s}
+                                  onChange={() => setEditingReaction({ ...editingReaction, score: s })}
+                                />
+                                {" "}{EMOJI[s]}
+                              </label>
+                            ))}
+                          </div>
+                        </td>
+                        <td>
+                          <button
+                            onClick={handleSaveEdit}
+                            className="btn submit"
+                            style={{ marginRight: "4px" }}
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={handleCancelEdit}
+                            className="btn secondary"
+                          >
+                            Cancel
+                          </button>
+                        </td>
+                      </tr>
+                    ) : (
+                      <tr key={r.id}>
+                        <td>{r.staff_id}</td>
+                        <td>{EMOJI[r.score] || r.score}</td>
+                        {user?.profile?.role !== "Technician" && (
+                          <td>
+                            <button
+                              onClick={() => handleStartEdit(r)}
+                              className="btn warn"
+                              style={{ marginRight: "4px" }}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteReaction(r.id)}
+                              className="btn danger"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        )}
+                      </tr>
+                    )
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {/*---------------------------------------------------------------------------------*/}
           {/* Reactions summary */}

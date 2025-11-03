@@ -1,5 +1,7 @@
 import "./styles.css";
-import { useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as usersAPI from "../../utilities/users-api";
 
@@ -14,6 +16,15 @@ export default function LoginPage({ setUser }) {
   });
 
   const [error, setError] = useState("");
+
+  //---------------------------------------------------------------------------------------
+  // Init scroll animation
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   //---------------------------------------------------------------------------------------
   function handleChange(evt) {
@@ -41,9 +52,14 @@ export default function LoginPage({ setUser }) {
   //---------------------------------------------------------------------------------------
   return (
     <main className="login-page">
-      <section className="login-box">
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
+      <section className="landing">
+        <div className="content-box" data-aos="fade-up">
+          <h1 className="main-title" data-aos="fade-up">
+            <span className="gradient-word">Login</span>
+          </h1>
+
+          <div className="login-box" data-aos="fade-up">
+            <form onSubmit={handleSubmit}>
           <label htmlFor="id_username">Username:</label>
           <input
             type="text"
@@ -64,12 +80,14 @@ export default function LoginPage({ setUser }) {
             required
           />
 
-          <button type="submit" className="btn submit">
-            Log In
-          </button>
-        </form>
+              <button type="submit" className="btn submit">
+                Log In
+              </button>
+            </form>
 
-        {error && <p className="error">{error}</p>}
+            {error && <p className="error">{error}</p>}
+          </div>
+        </div>
       </section>
     </main>
   );

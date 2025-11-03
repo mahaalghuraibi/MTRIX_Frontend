@@ -5,7 +5,6 @@ import * as ticketAPI from "../../utilities/ticket-api";
 import logo from "../../assets/images/setting.svg";
 import AddProfileForm from "../../components/Forms/AddProfileForm"; 
 
-//###### ALL
 
 //-----------------------------------------------------------------------------------------
 // User Detail Page

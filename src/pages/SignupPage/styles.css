@@ -1,0 +1,11 @@
+.form-container.signup input[type="email"],
+.form-container.signup input[name="confirmPassword"] {
+  background: #fff !important;
+  color: #1a1035 !important;
+}
+
+.form-container.signup input[type="email"]::placeholder,
+.form-container.signup input[name="confirmPassword"]::placeholder {
+  color: rgba(26, 16, 53, 0.5) !important;
+}
+

@@ -1,10 +1,11 @@
 /* Ticket Card */
 .ticket-card {
-  width: 275px;
-  margin: 10px;
+  width: 100%;
+  max-width: 380px;
+  margin: 0;
   background: rgba(0, 0, 0, 0.35);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 2.5rem;
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 25px rgba(147, 115, 255, 0.6);
   text-align: center;
@@ -12,24 +13,24 @@
 
 /* Icon */
 .ticket-card img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   display: block;
-  margin: 0 auto 10px;
+  margin: 0 auto 15px;
   filter: drop-shadow(0 0 10px rgba(147, 115, 255, 0.7));
 }
 
 /* Ticket title */
 .ticket-card h2 {
-  margin: 10px 0 5px 0;
+  margin: 10px 0 8px 0;
   color: #b095ff;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 /* Ticket text */
 .ticket-card p {
-  margin: 5px 0;
-  font-size: 0.95rem;
+  margin: 8px 0;
+  font-size: 1.1rem;
   color: rgba(220, 220, 255, 0.85);
 }
 

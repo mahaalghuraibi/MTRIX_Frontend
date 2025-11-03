@@ -73,9 +73,9 @@ export default function WorkLogForm({ ticketDetail, ticketLogs, setTicketLogs })
                     id="id_type"
                     onChange={handleChange}
                 >
-                    <option value="F">Fix</option>
                     <option value="C">Check</option>
-                    <option value="R">Replace</option>
+                    <option value="F">Fix</option>
+                    <option value="R">Fixed</option>
                 </select>
             </p>
             <p>

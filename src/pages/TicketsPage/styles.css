@@ -40,7 +40,14 @@
 /* Cards  */
 .index-card-container {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
   margin-top: 2rem;
+  justify-items: center;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 2rem;
 }
 
 
@@ -69,4 +76,27 @@
   background: rgba(0, 0, 0, 0.652);
   border: 1px solid rgba(255,255,255,0.15);
   box-shadow: 0 0 15px rgba(123,91,255,0.5);
+}
+
+/* Back button styling - same as Submit */
+.btn.end.submit {
+  align-self: flex-end;
+  background: linear-gradient(90deg, #b095ff 0%, #7d5bff 40%, #50c9ff 100%);
+  color: #fff;
+  border: none !important;
+  outline: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.6rem;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 0;
+  box-shadow: 0 0 15px rgba(123, 91, 255, 0.5);
+  transition: transform 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn.end.submit:hover {
+  transform: scale(1.05);
+  border: none !important;
 }

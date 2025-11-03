@@ -41,8 +41,7 @@ export async function getUser() {
     const token = localStorage.getItem("accessToken");
     if (!token) return null;
 
-    const response = await sendRequest(`${baseURL}token/refresh/`); // GET
-    // خزّني التوكنات المحدثة
+    const response = await sendRequest(`${baseURL}token/refresh/`); 
     if (response?.access) localStorage.setItem("accessToken", response.access);
     if (response?.refresh) localStorage.setItem("refreshToken", response.refresh);
 

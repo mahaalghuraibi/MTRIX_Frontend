@@ -23,7 +23,7 @@ export default function ReactionPage() {
     async function load() {
       try {
         if (!id) return;
-        const data = await reactionsAPI.index(id);
+        const data = await reactionsAPI.indexByTicket(id);
         setReactions(Array.isArray(data) ? data : (data.items || []));
       } catch (e) {
         setReactions([]);
@@ -54,7 +54,7 @@ export default function ReactionPage() {
     if (!id) return;
     try {
      
-      const updated = await reactionsAPI.create(id, formData);
+      const updated = await reactionsAPI.createByTicket(id, formData);
       setReactions(Array.isArray(updated) ? updated : (updated.items || []));
     
       setFormData(prev => ({ ...prev, score: 1 }));
@@ -131,10 +131,10 @@ export default function ReactionPage() {
               </tr>
             </thead>
             <tbody>
-              {reactions.map((r, i) => (
-                <tr key={i}>
-                  <td>{r.staff_id}</td>
-                  <td style={{ fontSize: "1.25rem" }}>{EMOJI[r.score] || r.score}</td>
+              {reactions.map((reaction, index) => (
+                <tr key={index}>
+                  <td>{reaction.staff_id}</td>
+                  <td style={{ fontSize: "1.25rem" }}>{EMOJI[reaction.score] || reaction.score}</td>
                 </tr>
               ))}
             </tbody>

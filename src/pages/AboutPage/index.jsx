@@ -10,7 +10,7 @@ import React, { useEffect } from "react";
 export default function AboutPage() {
 
   //---------------------------------------------------------------------------------------
-  // Init scroll animation (cy)
+  // Init scroll animation
   useEffect(() => {
     AOS.init({
       duration: 1000,

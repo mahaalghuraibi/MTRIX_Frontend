@@ -1,5 +1,7 @@
 import "./styles.css";
-import { useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import * as usersAPI from "../../utilities/users-api"; 
 
@@ -17,10 +19,19 @@ export default function SignupPage({ setUser }) {
   });
 
   const disabledSubmitBtn =
-    Object.values(errors).every((val) => val === "") &&
-    Object.values(formData).every((val) => val !== "")
+    Object.values(errors).every((value) => value === "") &&
+    Object.values(formData).every((value) => value !== "")
       ? false
       : true;
+
+  //---------------------------------------------------------------------------------------
+  // Init scroll animation
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   //---------------------------------------------------------------------------------------
   function handleChange(evt) {
@@ -78,11 +89,11 @@ export default function SignupPage({ setUser }) {
   //---------------------------------------------------------------------------------------
   return (
     <div className="page signup-page">
-      <div className="page-header">
+      <div className="page-header" data-aos="fade-up">
         <h1>Sign Up</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="form-container signup">
+      <form onSubmit={handleSubmit} className="form-container signup" data-aos="fade-up">
         <table>
           <tbody>
             <tr>

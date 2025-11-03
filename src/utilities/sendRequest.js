@@ -20,9 +20,13 @@ const token = localStorage.getItem("accessToken");
 // Send request
   try {
     const res = await fetch(`http://localhost:8000${url}`, options);
-    if (res.ok) return res.json();
+    const data = await res.json(); 
+    if (res.ok) return data; 
+    console.error('API Error:', res.status, data); 
+    const errorMsg = data.error || data.detail || (typeof data === 'object' ? JSON.stringify(data) : data) || `Request failed with status ${res.status}`; // جديد
+    throw new Error(errorMsg); 
   } catch (err) {
     console.log(err, "error in send-request");
-    return err;
+    throw err; 
   }
 }
