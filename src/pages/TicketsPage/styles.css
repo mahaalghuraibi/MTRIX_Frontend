@@ -40,10 +40,11 @@
 /* Cards  */
 .index-card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, 380px);
   gap: 2rem;
   margin-top: 2rem;
   justify-items: center;
+  justify-content: center;
   max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
@@ -51,32 +52,6 @@
 }
 
 
-/* Ticket card */
-.ticket-card {
-  background: rgba(0, 0, 0, 0.519);
-  border-radius: 12px;
-  padding: 1.5rem;
-}
-
-/* Title inside card */
-.ticket-card h2 {
-  margin: 0 0 0.5rem 0;
-  color: #b095ff;
-}
-
-/* Text inside card */
-.ticket-card p {
-  margin: 0.4rem 0;
-}
-
-/* Status  */
-.ticket-card p:last-child {
-  display: inline-block;
-  padding: 0.4rem 0.7rem;
-  background: rgba(0, 0, 0, 0.652);
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 0 15px rgba(123,91,255,0.5);
-}
 
 /* Back button styling - same as Submit */
 .btn.end.submit {

@@ -1,7 +1,11 @@
 /* Ticket Card */
 .ticket-card {
-  width: 100%;
+  width: 380px;
+  min-width: 380px;
   max-width: 380px;
+  height: 400px;
+  min-height: 400px;
+  max-height: 400px;
   margin: 0;
   background: rgba(0, 0, 0, 0.35);
   border-radius: 12px;
@@ -9,6 +13,26 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 25px rgba(147, 115, 255, 0.6);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Ticket card content and Link */
+.ticket-card a {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.ticket-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 /* Icon */
@@ -18,6 +42,7 @@
   display: block;
   margin: 0 auto 15px;
   filter: drop-shadow(0 0 10px rgba(147, 115, 255, 0.7));
+  flex-shrink: 0;
 }
 
 /* Ticket title */
@@ -25,13 +50,20 @@
   margin: 10px 0 8px 0;
   color: #b095ff;
   font-size: 1.5rem;
+  flex-shrink: 0;
 }
 
 /* Ticket text */
-.ticket-card p {
+.ticket-card p:not(:last-child) {
   margin: 8px 0;
   font-size: 1.1rem;
   color: rgba(220, 220, 255, 0.85);
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 /* Status */
@@ -44,4 +76,6 @@
   border-radius: 8px;
   color: #fff;
   margin-top: 8px;
+  flex-shrink: 0;
+  align-self: center;
 }

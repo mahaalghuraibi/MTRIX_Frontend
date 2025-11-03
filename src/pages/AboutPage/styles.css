@@ -14,17 +14,17 @@
   box-shadow: 0 0 25px rgba(123, 91, 255, 0.4);
   border-radius: 16px;
 
-  max-width: 600px;
+  max-width: 900px;
   width: 90%;
-  padding: 2rem 2rem 2.5rem;
+  padding: 3rem 3rem 3.75rem;
 
   text-align: center;
 }
 
 .about-title {
-  font-size: 2.2rem;
+  font-size: 3.3rem;
   line-height: 1.2;
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.5rem 0;
   text-shadow: 0 12px 30px rgba(0,0,0,0.8);
 
   background: linear-gradient(90deg, #b095ff 0%, #7d5bff 40%, #50c9ff 100%);
@@ -34,6 +34,7 @@
 }
 
 .about-text {
+  font-size: 1.5rem;
   line-height: 1.6;
   color: rgba(220,220,255,0.85);
   margin: 0;

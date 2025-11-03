@@ -20,7 +20,7 @@
 }
 
 .logo {
-  font-size: 1.7rem;
+  font-size: 2.652rem;
   font-weight: 500;
   background: linear-gradient(90deg, #b095ff 0%, #7d5bff 40%, #50c9ff 100%);
   background-clip: text;
@@ -36,15 +36,53 @@
 
 .nav-link {
   color: rgba(255,255,255,0.8);
-  font-size: 0.9rem;
+  font-size: 1.7rem;
   font-weight: 400;
+  font-family: "Poppins", system-ui, sans-serif;
+  text-decoration: none;
+  line-height: normal;
   position: relative;
   transition: color 0.15s ease;
+  display: inline-block;
+  vertical-align: baseline;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .nav-link:hover {
   color: #fff;
 
+}
+
+.btn-as-link {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer;
+  text-decoration: none !important;
+  font-size: 1.7rem !important;
+  font-weight: 400 !important;
+  color: rgba(255,255,255,0.8) !important;
+  font-family: "Poppins", system-ui, sans-serif !important;
+  line-height: normal !important;
+  position: relative;
+  transition: color 0.15s ease;
+  display: inline-block !important;
+  vertical-align: baseline !important;
+  font-style: normal !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  width: auto;
+  height: auto;
+}
+
+.btn-as-link:hover {
+  color: #fff !important;
 }
 
 

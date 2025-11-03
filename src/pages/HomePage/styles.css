@@ -21,6 +21,9 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  max-width: 900px;
+  width: 90%;
+  padding: 3rem;
 }
 
 /* Icons row */
@@ -31,8 +34,8 @@
 
 /* Each icon box with light glow */
 .icon-box {
-  width: 48px;
-  height: 48px;
+  width: 141px;
+  height: 141px;
   border-radius:10px;
   background: rgba(0,0,0,0.4);
   border: 1px solid rgba(255,255,255,0.2);
@@ -40,7 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;  
+  font-size: 4.732rem;  
 }
 
 /* Main title */
@@ -54,7 +57,7 @@
 
 /* Greeting text */
 .greeting {
-  font-size: 2.5rem;
+  font-size: 7.098rem;
   font-weight: bold;
   color: #fff;
 }
@@ -62,16 +65,26 @@
 
 /* Gradient word inside the second line */
 .gradient-word {
-  background: linear-gradient(90deg, #b095ff 0%, #7d5bff 40%, #50c9ff 100%);
-  background-clip: text;
-  color: transparent;
   letter-spacing: 0.05em;
   margin-left: 0.5rem;
+  font-size: 7.098rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #b095ff 0%, #7d5bff 40%, #50c9ff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.gradient-word .greeting {
+  background: none;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  color: #fff;
 }
 
 /* Tagline under the title */
 .tagline {
-  font-size: 1.2rem;
+  font-size: 3.549rem;
   color: rgba(200,200,255,0.8);
   background: rgba(0,0,0,0.3);
   padding: 0.75rem 1rem;
